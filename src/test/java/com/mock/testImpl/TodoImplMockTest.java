@@ -4,6 +4,7 @@ import com.mock.impl.TodoImpl;
 import com.mock.service.TodoService;
 import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.util.Arrays;
@@ -41,5 +42,23 @@ public class TodoImplMockTest {
         List<String> filteredData = impl.retrieveTodosRelatedToSpring("dummyUser");
 
         Assert.assertEquals(0, filteredData.size());
+    }
+
+    @Test
+    public void deleteTodosNotRelatedToSpring_ArgumentCaptor() {
+
+        // Argument Captor
+        ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
+
+        TodoService mockService = Mockito.mock(TodoService.class);
+
+        List<String> todos = Arrays.asList("Spring", "Sprint", "Sprite");
+        Mockito.when(mockService.retrieveTodos("dummyUser")).thenReturn(todos);
+
+        TodoImpl impl = new TodoImpl(mockService);
+        List<String> filteredData = impl.retrieveTodosRelatedToSpring("dummyUser");
+
+        Assert.assertEquals(0, filteredData.size());
+
     }
 }
