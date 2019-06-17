@@ -61,4 +61,29 @@ public class TodoImplMockTest {
         Assert.assertEquals(0, filteredData.size());
 
     }
+
+    @Test
+    public void deleteTodoNotRelatedToSpring() {
+
+        TodoService mockService = Mockito.mock(TodoService.class);
+
+        List<String> todos = Arrays.asList("Sprint", "Spring");
+        Mockito.when(mockService.retrieveTodos("dummyUser")).thenReturn(todos);
+        // String value passed during mocking must match with value used during method calling for successful mocking.
+
+        TodoImpl impl = new TodoImpl(mockService);
+        impl.deleteTodosNotRelatedToSpring("dummyUser");
+
+        // verify methods in Mockito are used to ensure if a method is being called or not.
+
+        // below statement expects that deleteTodo method is called.
+        Mockito.verify(mockService).deleteTodo("Sprint");
+        // this step will fail as deleteTodo is never called as it is expecting a string that does not contain Spring word in it.
+
+        // below statement expects that deleteTodo method is never called.
+        Mockito.verify(mockService, Mockito.never()).deleteTodo("Spring");
+
+        // below statement is used to verify number of times a method is called
+        Mockito.verify(mockService, Mockito.times(1)).deleteTodo("Sprint");
+    }
 }

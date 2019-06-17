@@ -11,4 +11,8 @@ public class TodoServiceStub implements TodoService {
     public List<String> retrieveTodos(String user) {
         return Arrays.asList("Core Java", "Spring Tutorial", "Advance Java", "Spring Configurations");
     }
+
+    public void deleteTodo(String todo) {
+        // adding unimplemented method
+    }
 }

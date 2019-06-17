@@ -8,5 +8,5 @@ public interface TodoService {
 
     public List<String> retrieveTodos(String user);
 
-    void deleteTodo(String todo);
+    public void deleteTodo(String todo);
 }

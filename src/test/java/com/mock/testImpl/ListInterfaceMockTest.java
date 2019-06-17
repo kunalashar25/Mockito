@@ -44,6 +44,7 @@ public class ListInterfaceMockTest {
     public void testListGet_ArgumentMatcher() {
         List listMock = Mockito.mock(List.class);
         // Matchers.anyInt() is called as Argument Matcher
+        // Mockito doesn't allow to enter combination of Matchers and hard-coded values.
         Mockito.when(listMock.get(Matchers.anyInt())).thenReturn("Dynamic Index");
 
         // list will always return Dynamic Index String for any random index used in list due to anyInt() method.
