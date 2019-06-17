@@ -5,6 +5,7 @@ import com.mock.service.TodoService;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 
@@ -43,5 +44,55 @@ public class BddStructureMockTest {
         BDDMockito.then(mockService).should().deleteTodo("Sprint");
 
         BDDMockito.then(mockService).should(BDDMockito.never()).deleteTodo("Spring");
+    }
+
+    @Test
+    public void testArgumentCapture() {
+
+        //Declare Argument Captor
+        ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
+
+        // Given
+        TodoService mockService = Mockito.mock(TodoService.class);
+        List<String> todos = Arrays.asList("Sprint", "Spring");
+
+        BDDMockito.given(mockService.retrieveTodos("dummyUser")).willReturn(todos);
+
+        TodoImpl impl = new TodoImpl(mockService);
+
+        // When
+        impl.deleteTodosNotRelatedToSpring("dummyUser");
+
+        // Define Argument Captor on specific method call
+        // Then
+        BDDMockito.then(mockService).should().deleteTodo(argumentCaptor.capture());
+
+        // Check captured argument
+        Assert.assertThat(argumentCaptor.getValue(), CoreMatchers.is("Sprint"));
+    }
+
+    @Test
+    public void testArgumentCapture_MultipleCalls() {
+
+        //Declare Argument Captor
+        ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
+
+        // Given
+        TodoService mockService = Mockito.mock(TodoService.class);
+        List<String> todos = Arrays.asList("Sprint", "Spring", "Sprite");
+
+        BDDMockito.given(mockService.retrieveTodos("dummyUser")).willReturn(todos);
+
+        TodoImpl impl = new TodoImpl(mockService);
+
+        // When
+        impl.deleteTodosNotRelatedToSpring("dummyUser");
+
+        // Define Argument Captor on specific method call
+        // Then
+        BDDMockito.then(mockService).should(BDDMockito.times(2)).deleteTodo(argumentCaptor.capture());
+
+        // Check captured argument
+        Assert.assertThat(argumentCaptor.getAllValues().size(), CoreMatchers.is(2));
     }
 }
