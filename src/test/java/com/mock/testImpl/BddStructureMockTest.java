@@ -1,11 +1,14 @@
 package com.mock.testImpl;
 
+import com.mock.impl.TodoImpl;
+import com.mock.service.TodoService;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class BddStructureMockTest {
@@ -21,5 +24,24 @@ public class BddStructureMockTest {
 
         // Then
         Assert.assertThat("test", CoreMatchers.is(s));
+    }
+
+    @Test
+    public void testMethodCalls() {
+        // Given
+        TodoService mockService = Mockito.mock(TodoService.class);
+        List<String> todos = Arrays.asList("Sprint", "Spring");
+
+        BDDMockito.given(mockService.retrieveTodos("dummyUser")).willReturn(todos);
+
+        TodoImpl impl = new TodoImpl(mockService);
+
+        // When
+        impl.deleteTodosNotRelatedToSpring("dummyUser");
+
+        // Then
+        BDDMockito.then(mockService).should().deleteTodo("Sprint");
+
+        BDDMockito.then(mockService).should(BDDMockito.never()).deleteTodo("Spring");
     }
 }
