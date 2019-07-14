@@ -10,29 +10,29 @@ import java.util.List;
 
 public class TodoImplStubTest {
 
-    @Test
-    public void testStubSize() {
-        TodoService serviceStub = new TodoServiceStub();
-        TodoImpl impl = new TodoImpl(serviceStub);
+	@Test
+	public void testStubSize() {
+		TodoService serviceStub = new TodoServiceStub();
+		TodoImpl impl = new TodoImpl(serviceStub);
 
-        List<String> filteredData = impl.retrieveTodosRelatedToSpring("dummy");
+		List<String> filteredData = impl.retrieveTodosRelatedToSpring("dummy");
 
-        Assert.assertEquals(2, filteredData.size());
-    }
+		Assert.assertEquals(2, filteredData.size());
+	}
 
-    @Test
-    public void checkedFilteredData() {
-        boolean flag = false;
-        TodoService serviceStub = new TodoServiceStub();
-        TodoImpl impl = new TodoImpl(serviceStub);
+	@Test
+	public void checkedFilteredData() {
+		boolean flag = false;
+		TodoService serviceStub = new TodoServiceStub();
+		TodoImpl impl = new TodoImpl(serviceStub);
 
-        List<String> filteredData = impl.retrieveTodosRelatedToSpring("dummy");
-        for (String data : filteredData) {
-            if (!data.contains("Spring"))
-                flag = true;
-        }
+		List<String> filteredData = impl.retrieveTodosRelatedToSpring("dummy");
+		for (String data : filteredData) {
+			if (!data.contains("Spring"))
+				flag = true;
+		}
 
-        if (flag)
-            Assert.assertTrue("Filtered Data does not contain Spring word.", !flag);
-    }
+		if (flag)
+			Assert.assertTrue("Filtered Data does not contain Spring word.", !flag);
+	}
 }

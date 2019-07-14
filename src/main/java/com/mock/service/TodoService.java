@@ -6,7 +6,7 @@ import java.util.List;
 // TodoService can be an external interface or service created by someother team. There is no actual implementation of TodoService in this project.
 public interface TodoService {
 
-    public List<String> retrieveTodos(String user);
+	public List<String> retrieveTodos(String user);
 
-    public void deleteTodo(String todo);
+	public void deleteTodo(String todo);
 }

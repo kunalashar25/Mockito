@@ -16,27 +16,27 @@ import java.util.List;
 
 public class MockitoRuleTest {
 
-    @Rule // rules should be public to access everything
-    public MockitoRule rule = MockitoJUnit.rule();
-    // @Rule annotation was introduced inorder to avoid hardcoding of @RunWith annotation. We need to bind a class to run with specific rule.
-    // There can only be one @RunWith in a class but we can have multiple @Rule.
-    // @Rule will run before and after the test.
+	@Rule // rules should be public to access everything
+	public MockitoRule rule = MockitoJUnit.rule();
+	// @Rule annotation was introduced inorder to avoid hardcoding of @RunWith annotation. We need to bind a class to run with specific rule.
+	// There can only be one @RunWith in a class but we can have multiple @Rule.
+	// @Rule will run before and after the test.
 
-    @Mock
-    TodoService mockService;
+	@Mock
+	TodoService mockService;
 
-    @InjectMocks
-    TodoImpl impl;
+	@InjectMocks
+	TodoImpl impl;
 
-    @Test
-    public void testBlankMockSize() {
-        // compare testcase structure with TodoImplMockTest.testBlankMockSize()
-        List<String> todos = Arrays.asList();
-        Mockito.when(mockService.retrieveTodos("dummyUser")).thenReturn(todos);
+	@Test
+	public void testBlankMockSize() {
+		// compare testcase structure with TodoImplMockTest.testBlankMockSize()
+		List<String> todos = Arrays.asList();
+		Mockito.when(mockService.retrieveTodos("dummyUser")).thenReturn(todos);
 
-        List<String> filteredData = impl.retrieveTodosRelatedToSpring("dummyUser");
+		List<String> filteredData = impl.retrieveTodosRelatedToSpring("dummyUser");
 
-        Assert.assertEquals(0, filteredData.size());
-    }
+		Assert.assertEquals(0, filteredData.size());
+	}
 
 }
