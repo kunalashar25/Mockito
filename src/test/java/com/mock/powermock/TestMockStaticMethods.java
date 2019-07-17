@@ -1,5 +1,6 @@
 package com.mock.powermock;
 
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,7 +38,15 @@ public class TestMockStaticMethods {
 		PowerMockito.mockStatic(UtilityClass.class);
 		Mockito.when(UtilityClass.staticMethod(6)).thenReturn(150);
 
-		sut.methodCallingAStaticMethod();
+		int result = sut.methodCallingAStaticMethod();
+		System.out.println(result);
+		Assert.assertEquals(150,result);
+
+		// to check if method was called or not
+		PowerMockito.verifyStatic();
+		UtilityClass.staticMethod(6);
+		PowerMockito.verifyStatic();
+		UtilityClass.staticMethod(5); // Will fail as we never called this method with value 5.
 	}
 
 }
